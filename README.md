@@ -5,3 +5,7 @@ details (e.g. name or student number).
 
 Remember to include the address of the online location where your project is
 running as it is a key part of the submission.
+
+## DB
+
+In ./flyway/sql command to init db
