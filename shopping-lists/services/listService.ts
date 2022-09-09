@@ -3,20 +3,17 @@ import { executeQuery } from "../database/database.ts";
 const getAll = async () => {
   const result = await executeQuery(
     "SELECT * FROM shopping_lists WHERE active = true",
-    {}
+    {},
   );
   return result.rows;
-}
+};
 
 const add = async (name: string) => {
   const result = await executeQuery(
     "INSERT INTO shopping_lists (name, active) VALUES ($name, true)",
-    { name: name }
-  )
+    { name: name },
+  );
   return result.rows;
-}
+};
 
-export {
-  getAll,
-  add,
-}
+export { add, getAll };

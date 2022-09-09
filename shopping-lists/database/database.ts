@@ -22,9 +22,9 @@ const executeQuery = async (query, params) => {
   } finally {
     if (client) {
       try {
-      await client.end();
+        await client.end();
       } catch (e) {
-      console.log(e);
+        console.log(e);
       }
     }
   }

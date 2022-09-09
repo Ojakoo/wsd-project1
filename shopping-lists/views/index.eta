@@ -1,0 +1,6 @@
+<h1>Shared shopping lists<h/1>
+<body>
+  <nav>
+    <p><a href="/lists">All lists</a></p>
+  </nav>
+</body>

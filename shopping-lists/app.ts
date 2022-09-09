@@ -11,26 +11,27 @@ const responseDetails = {
 };
 
 const data = {
-  lists: []
-}
+  lists: [],
+};
 
 const redirectTo = (path: string, code: number) => {
   return new Response("Redirect", {
     status: code,
-    headers: { "Location": path, },
+    headers: { "Location": path },
   });
-}
+};
 
 const handleRequest = async (req) => {
   const url = new URL(req.url);
 
-  if (url.pathname === "/lists") {
+  if (url.pathname === "/") {
+    return new Response(await renderFile("index.eta", data), responseDetails);
+  } else if (url.pathname === "/lists") {
     if (req.method === "POST") {
       const formData = await req.formData();
       const name = formData.get("name");
 
-      const res = await listService.add(name);
-      // do something with failed req?
+      await listService.add(name);
 
       return redirectTo("/lists", 303);
     } else {
