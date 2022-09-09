@@ -20,10 +20,12 @@ const executeQuery = async (query, params) => {
   } catch (e) {
     response.error = e;
   } finally {
-    try {
+    if (client) {
+      try {
       await client.end();
-    } catch (e) {
+      } catch (e) {
       console.log(e);
+      }
     }
   }
 

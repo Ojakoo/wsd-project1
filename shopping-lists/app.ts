@@ -14,14 +14,29 @@ const data = {
   lists: []
 }
 
-const handleRequest = async (request) => {
-  const url = new URL(request.url);
+const redirectTo = (path: string, code: number) => {
+  return new Response("Redirect", {
+    status: code,
+    headers: { "Location": path, },
+  });
+}
+
+const handleRequest = async (req) => {
+  const url = new URL(req.url);
 
   if (url.pathname === "/lists") {
-    const result = await listService.getAll();
-    console.log(result);
-    data.lists = result;
-    return new Response(await renderFile("lists.eta", data), responseDetails);
+    if (req.method === "POST") {
+      const formData = await req.formData();
+      const name = formData.get("name");
+
+      const res = await listService.add(name);
+      // do something with failed req?
+
+      return redirectTo("/lists", 303);
+    } else {
+      data.lists = await listService.getAll();
+      return new Response(await renderFile("lists.eta", data), responseDetails);
+    }
   } else {
     return new Response("404", { status: 404 });
   }

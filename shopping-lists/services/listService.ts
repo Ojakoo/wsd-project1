@@ -8,6 +8,15 @@ const getAll = async () => {
   return result.rows;
 }
 
+const add = async (name: string) => {
+  const result = await executeQuery(
+    "INSERT INTO shopping_lists (name, active) VALUES ($name, true)",
+    { name: name }
+  )
+  return result.rows;
+}
+
 export {
   getAll,
+  add,
 }
