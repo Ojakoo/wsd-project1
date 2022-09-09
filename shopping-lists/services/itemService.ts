@@ -30,6 +30,6 @@ const countResources = async () => {
     {},
   );
   return result.rows[0].count;
-}
+};
 
-export { add, collect, getByListId, countResources };
+export { add, collect, countResources, getByListId };

@@ -65,7 +65,7 @@ const handleItemAdd = async (req, list_id: number) => {
 const handleCollection = async (list_id: number, id: number) => {
   await itemService.collect(id);
   return redirectTo(`/lists/${list_id}`, 303);
-}
+};
 
 // request handler
 
@@ -80,7 +80,7 @@ const handleRequest = async (req) => {
     const data = {
       list_count: list_count,
       item_count: item_count,
-    }
+    };
 
     return new Response(await renderFile("index.eta", data), responseDetails);
   } else if (url.pathname === "/lists" && req.method === "POST") {
@@ -101,9 +101,11 @@ const handleRequest = async (req) => {
   ) {
     return await handleItemAdd(req, Number(pathSplit[1]));
   } else if (
-    pathSplit.length === 5 && pathSplit[0] === "lists" && pathSplit[2] === "items" && pathSplit[4] === "collect" && req.method === "POST"
+    pathSplit.length === 5 && pathSplit[0] === "lists" &&
+    pathSplit[2] === "items" && pathSplit[4] === "collect" &&
+    req.method === "POST"
   ) {
-    return await handleCollection( Number(pathSplit[1]), Number(pathSplit[3]));
+    return await handleCollection(Number(pathSplit[1]), Number(pathSplit[3]));
   } else {
     console.log("missed path");
     return new Response("404", { status: 404 });

@@ -38,6 +38,6 @@ const countResources = async () => {
     {},
   );
   return result.rows[0].count;
-}
+};
 
-export { add, deactivateById, getAll, getById, countResources };
+export { add, countResources, deactivateById, getAll, getById };
