@@ -12,10 +12,10 @@ In ./flyway/sql command to init db
 
 ## Run
 
-``` 
+```
 cd shoppping-lists/ 
 deno run --allow-read --allow-env --allow-net --watch
-app.ts 
+app.ts
 ```
 
 ## Deploy
@@ -24,7 +24,7 @@ Automatically deploy on Railway
 
 ## Lint
 
-``` 
+```
 deno fmt 
 deno lint
 ```

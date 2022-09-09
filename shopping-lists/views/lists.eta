@@ -1,12 +1,17 @@
 <h1>Lists<h/1>
 <body>
   <form method="POST">
-    <input type="text" name="name">
-    <input type="submit" value="Add new list">
+    <input type="text" name="name"/>
+    <input type="submit" value="Add new list"/>
   </form>
 </body>
 <ul>
   <% it.lists.forEach((list) => { %>
-    <li><%= list.name %></li>
+    <li>
+      <a href="/lists/<%= list.id %>"><%= list.name %><a>
+      <form method="POST" action="lists/<%= list.id %>/deactivate">
+        <input type="submit" value="Deactivate list!"/>
+      </form>
+    </li>
   <% }); %>
 </ul>

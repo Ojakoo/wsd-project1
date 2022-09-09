@@ -8,6 +8,14 @@ const getAll = async () => {
   return result.rows;
 };
 
+const getById = async (id: number) => {
+  const result = await executeQuery(
+    "SELECT * FROM shopping_lists WHERE id = $id",
+    { id: id },
+  );
+  return result.rows;
+};
+
 const add = async (name: string) => {
   const result = await executeQuery(
     "INSERT INTO shopping_lists (name, active) VALUES ($name, true)",
@@ -16,4 +24,12 @@ const add = async (name: string) => {
   return result.rows;
 };
 
-export { add, getAll };
+const deactivateById = async (id: number) => {
+  const result = await executeQuery(
+    "UPDATE shopping_lists SET active = false WHERE id = $id",
+    { id: id },
+  );
+  return result.rows;
+};
+
+export { add, deactivateById, getAll, getById };
