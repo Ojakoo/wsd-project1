@@ -1,3 +1,5 @@
+<% layout("./layout.eta") %>
+
 <h1>Lists<h/1>
 <body>
   <form method="POST">

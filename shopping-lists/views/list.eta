@@ -1,1 +1,20 @@
-<h1><%= it.name %></h1>
+<% layout("./layout.eta") %>
+
+<h1><%= it.list.name %></h1>
+<a href="/lists">Lists</a>
+<body>
+  <form method="POST">
+    <input type="text" name="name"/>
+    <input type="submit" value="Add new item"/>
+  </form>
+</body>
+<ul>
+  <% it.items.forEach((item) => { %>
+    <li>
+      <p><%= item.name %></p>
+      <form method="POST" action="/lists/<%= it.list.id %>/items/<%= item.id %>/collect">
+        <input type="submit" value="Mark collected!"/>
+      </form>
+    </li>
+  <% }); %>
+</ul>

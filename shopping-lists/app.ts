@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.140.0/http/server.ts";
 import { configure, renderFile } from "https://deno.land/x/eta@v1.12.3/mod.ts";
 import * as listService from "./services/listService.ts";
+import * as itemService from "./services/itemService.ts";
 
 configure({
   views: `${Deno.cwd()}/views`,
@@ -21,6 +22,48 @@ const redirectTo = (path: string, code: number) => {
   });
 };
 
+// lists page handlers
+
+const handleListsAdd = async (req) => {
+  const formData = await req.formData();
+  const name = formData.get("name");
+  await listService.add(name);
+  return redirectTo("/lists", 303);
+}
+
+const handleListsGet = async () => {
+  data.lists = await listService.getAll();
+  return new Response(await renderFile("lists.eta", data), responseDetails);
+}
+
+const handleListDeactivate = async (id: number) => {
+  await listService.deactivateById(id);
+  return redirectTo("/lists", 303);
+}
+
+// list page handlers
+
+const handleListGet = async (id: number) => {
+  const res = await listService.getById(id);
+  const items = await itemService.getByListId(id);
+
+  const data = {
+    list: res[0],
+    items: items,
+  }
+
+  return new Response(await renderFile("list.eta", data), responseDetails);
+}
+
+const handleItemAdd = async (req, list_id: number) => {
+  const formData = await req.formData();
+  const name = formData.get("name");
+  await itemService.add(list_id, name);
+  return redirectTo(`/lists/${list_id}`, 303);
+}
+
+// request handler
+
 const handleRequest = async (req) => {
   const url = new URL(req.url);
   const pathSplit = url.pathname.slice(1).split("/");
@@ -28,27 +71,24 @@ const handleRequest = async (req) => {
   if (url.pathname === "/") {
     return new Response(await renderFile("index.eta", data), responseDetails);
   } else if (url.pathname === "/lists" && req.method === "POST") {
-    const formData = await req.formData();
-    const name = formData.get("name");
-
-    await listService.add(name);
-
-    return redirectTo("/lists", 303);
+    return await handleListAdd(req);
   } else if (url.pathname === "/lists" && req.method === "GET") {
-    data.lists = await listService.getAll();
-    return new Response(await renderFile("lists.eta", data), responseDetails);
+    return await handleListsGet();
   } else if (
     pathSplit.length === 2 && pathSplit[0] === "lists" && req.method === "GET"
   ) {
-    const res = await listService.getById(Number(pathSplit[1]));
-    return new Response(await renderFile("list.eta", res[0]), responseDetails);
+    return await handleListGet(Number(pathSplit[1]));
   } else if (
     pathSplit.length === 3 && pathSplit[0] === "lists" &&
     pathSplit[2] === "deactivate" && req.method === "POST"
   ) {
-    await listService.deactivateById(Number(pathSplit[1]));
-    return redirectTo("/lists", 303);
+    return await handleListDeactivate(Number(pathSplit[1]));
+  } else if (
+    pathSplit.length === 2 && pathSplit[0] === "lists" && req.method === "POST"
+  ) {
+    return await handleItemAdd(req, Number(pathSplit[1]));
   } else {
+    console.log("missed path");
     return new Response("404", { status: 404 });
   }
 };

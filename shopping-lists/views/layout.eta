@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopping lists</title>
+  </head>
+  <body>
+    <a href="/">Main page</a>
+    <%~ it.body %>
+  </body>
+</html>

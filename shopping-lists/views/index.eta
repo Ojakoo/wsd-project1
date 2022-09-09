@@ -1,3 +1,5 @@
+<% layout("./layout.eta") %>
+
 <h1>Shared shopping lists<h/1>
 <body>
   <nav>

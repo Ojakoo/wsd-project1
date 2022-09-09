@@ -14,8 +14,7 @@ In ./flyway/sql command to init db
 
 ```
 cd shoppping-lists/ 
-deno run --allow-read --allow-env --allow-net --watch
-app.ts
+deno run --allow-read --allow-env --allow-net app.ts
 ```
 
 ## Deploy
