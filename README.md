@@ -9,3 +9,20 @@ running as it is a key part of the submission.
 ## DB
 
 In ./flyway/sql command to init db
+
+## Run
+
+'''
+cd shoppping-lists/
+deno run --allow-read --allow-env --allow-net --watch app.ts
+'''
+
+## Deploy
+
+Automatically deploy on Railway
+
+## Lint
+
+'''
+deno fmt
+'''

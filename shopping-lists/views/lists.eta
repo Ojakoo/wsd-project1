@@ -5,3 +5,8 @@
     <input type="submit">
   </form>
 </body>
+<ul>
+  <% it.lists.forEach((list) => { %>
+    <li><%= list.name %></li>
+  <% }); %>
+</ul>
