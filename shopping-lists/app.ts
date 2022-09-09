@@ -11,10 +11,6 @@ const responseDetails = {
   headers: { "Content-Type": "text/html;charset=UTF-8" },
 };
 
-const data = {
-  lists: [],
-};
-
 const redirectTo = (path: string, code: number) => {
   return new Response("Redirect", {
     status: code,
@@ -32,6 +28,10 @@ const handleListsAdd = async (req) => {
 };
 
 const handleListsGet = async () => {
+  const data = {
+    lists: [],
+  };
+
   data.lists = await listService.getAll();
   return new Response(await renderFile("lists.eta", data), responseDetails);
 };
@@ -69,6 +69,14 @@ const handleRequest = async (req) => {
   const pathSplit = url.pathname.slice(1).split("/");
 
   if (url.pathname === "/") {
+    const list_count = await listService.countResources();
+    const item_count = await itemService.countResources();
+
+    const data = {
+      list_count: list_count,
+      item_count: item_count,
+    }
+
     return new Response(await renderFile("index.eta", data), responseDetails);
   } else if (url.pathname === "/lists" && req.method === "POST") {
     return await handleListsAdd(req);

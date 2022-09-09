@@ -24,4 +24,12 @@ const getByListId = async (list_id: number) => {
   return result.rows;
 };
 
-export { add, collect, getByListId };
+const countResources = async () => {
+  const result = await executeQuery(
+    "SELECT COUNT(id) FROM shopping_list_items",
+    {},
+  );
+  return result.rows[0].count;
+}
+
+export { add, collect, getByListId, countResources };

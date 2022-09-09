@@ -32,4 +32,12 @@ const deactivateById = async (id: number) => {
   return result.rows;
 };
 
-export { add, deactivateById, getAll, getById };
+const countResources = async () => {
+  const result = await executeQuery(
+    "SELECT COUNT(id) FROM shopping_lists",
+    {},
+  );
+  return result.rows[0].count;
+}
+
+export { add, deactivateById, getAll, getById, countResources };

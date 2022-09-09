@@ -4,5 +4,7 @@
 <body>
   <nav>
     <p><a href="/lists">Lists</a></p>
+    <p>Shopping lists: <%= it.list_count %></p>
+    <p>Shopping list items: <%= it.item_count %></p>
   </nav>
 </body>
