@@ -2,7 +2,7 @@ import { executeQuery } from "../database/database.ts";
 
 const getAll = async () => {
   const result = await executeQuery(
-    "SELECT * FROM shopping_lists",
+    "SELECT * FROM shopping_lists WHERE active = true",
     {}
   );
   return result.rows;
