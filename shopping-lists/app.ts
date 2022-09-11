@@ -84,18 +84,20 @@ const handleRequest = async (req: Request): Promise<Response> => {
   const pathSplit = url.pathname.slice(1).split("/");
 
   if (url.pathname === "/") {
-    const list_count = await listService.countResources();
-    const item_count = await itemService.countResources();
-
     const data = {
       list_count: 0,
       item_count: 0,
     };
 
+    /*
+    const list_count = await listService.countResources();
+    const item_count = await itemService.countResources();
+
     if (list_count && item_count) {
       data.list_count = Number(list_count[0].count);
       data.item_count = Number(item_count[0].count);
     }
+    */
 
     return new Response(
       await renderFile("index.eta", data) as string,
