@@ -6,15 +6,25 @@ details (e.g. name or student number).
 Remember to include the address of the online location where your project is
 running as it is a key part of the submission.
 
+## Install deno
+
+Install deno
+
 ## DB
 
 In ./flyway/sql command to init db
+
+Spin up local postgres db:
+
+```
+docker-compose start
+```
 
 ## Run
 
 ```
 cd shoppping-lists/ 
-deno run --allow-read --allow-env --allow-net app.ts
+deno task start
 ```
 
 ## Deploy

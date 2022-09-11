@@ -20,20 +20,22 @@ const redirectTo = (path: string, code: number) => {
 
 // lists page handlers
 
-const handleListsAdd = async (req) => {
+const handleListsAdd = async (req: Request) => {
   const formData = await req.formData();
-  const name = formData.get("name");
-  await listService.add(name);
+
+  if (formData.has("name")) {
+    await listService.add(formData.get("name") as string);
+  }
+
   return redirectTo("/lists", 303);
 };
 
 const handleListsGet = async () => {
-  const data = {
-    lists: [],
-  };
-
-  data.lists = await listService.getAll();
-  return new Response(await renderFile("lists.eta", data), responseDetails);
+  const lists = await listService.getAll();
+  return new Response(
+    await renderFile("lists.eta", { lists }) as string,
+    responseDetails,
+  );
 };
 
 const handleListDeactivate = async (id: number) => {
@@ -47,18 +49,26 @@ const handleListGet = async (id: number) => {
   const res = await listService.getById(id);
   const items = await itemService.getByListId(id);
 
-  const data = {
-    list: res[0],
-    items: items,
-  };
+  if (res) {
+    const data = {
+      list: res[0],
+      items: items,
+    };
 
-  return new Response(await renderFile("list.eta", data), responseDetails);
+    return new Response(
+      await renderFile("list.eta", data) as string,
+      responseDetails,
+    );
+  }
+  // no list page with id return 404
+  return new Response("404", { status: 404 });
+  // error return
 };
 
-const handleItemAdd = async (req, list_id: number) => {
+const handleItemAdd = async (req: Request, list_id: number) => {
   const formData = await req.formData();
   const name = formData.get("name");
-  await itemService.add(list_id, name);
+  await itemService.add(list_id, name as string);
   return redirectTo(`/lists/${list_id}`, 303);
 };
 
@@ -69,7 +79,7 @@ const handleCollection = async (list_id: number, id: number) => {
 
 // request handler
 
-const handleRequest = async (req) => {
+const handleRequest = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
   const pathSplit = url.pathname.slice(1).split("/");
 
@@ -78,11 +88,19 @@ const handleRequest = async (req) => {
     const item_count = await itemService.countResources();
 
     const data = {
-      list_count: list_count,
-      item_count: item_count,
+      list_count: 0,
+      item_count: 0,
     };
 
-    return new Response(await renderFile("index.eta", data), responseDetails);
+    if (list_count && item_count) {
+      data.list_count = Number(list_count[0].count);
+      data.item_count = Number(item_count[0].count);
+    }
+
+    return new Response(
+      await renderFile("index.eta", data) as string,
+      responseDetails,
+    );
   } else if (url.pathname === "/lists" && req.method === "POST") {
     return await handleListsAdd(req);
   } else if (url.pathname === "/lists" && req.method === "GET") {
