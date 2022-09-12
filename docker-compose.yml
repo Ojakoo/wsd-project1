@@ -1,20 +1,6 @@
 version: "3.4"
 
 services:
-  shopping-lists:
-    build: shopping-lists
-    image: shopping-lists
-    restart: "no"
-    volumes:
-      - ./shopping-lists/:/app
-    ports:
-      - 7777:7777
-    depends_on:
-      - database
-      - flyway
-    env_file:
-      - project.env
-
   database:
     container_name: database-p1-e86fab91-30aa-44a2-8f02-b7d53a8fee90
     image: postgres:14.1
