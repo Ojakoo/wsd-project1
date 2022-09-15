@@ -15,10 +15,10 @@
         <p><del><%= item.name %></del></p>
       <% } else { %>
         <p><%= item.name %></p>
+        <form method="POST" action="/lists/<%= it.list.id %>/items/<%= item.id %>/collect">
+          <input type="submit" value="Mark collected!"/>
+        </form>
       <% } %>
-      <form method="POST" action="/lists/<%= it.list.id %>/items/<%= item.id %>/collect">
-        <input type="submit" value="Mark collected!"/>
-      </form>
     </li>
   <% }); %>
 </ul>
