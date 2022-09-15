@@ -24,7 +24,7 @@ docker-compose start
 
 ```
 cd shoppping-lists/ 
-deno task start
+deno run --allow-net --allow-env --allow-read app.ts
 ```
 
 ## Deploy
