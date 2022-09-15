@@ -89,7 +89,6 @@ const handleRequest = async (req: Request): Promise<Response> => {
       item_count: 0,
     };
 
-    /*
     const list_count = await listService.countResources();
     const item_count = await itemService.countResources();
 
@@ -97,7 +96,6 @@ const handleRequest = async (req: Request): Promise<Response> => {
       data.list_count = Number(list_count[0].count);
       data.item_count = Number(item_count[0].count);
     }
-    */
 
     return new Response(
       await renderFile("index.eta", data) as string,

@@ -26,17 +26,10 @@ interface Count {
   count: number;
 }
 
+//  this is still bit sketch
 type QueryParams = Record<string, unknown>;
 
 type ResponseFields = Array<string>;
-
-// this is union type, need to fix to template with multiple return types
-type ReturnFields = Array<List | Item | Count>;
-
-interface responseDetails {
-  rows?: ReturnFields;
-  error?: Error;
-}
 
 const db: serverSchema = {
   user: Deno.env.get("PGUSER"),
@@ -48,19 +41,21 @@ const db: serverSchema = {
 
 const client = new Client(db);
 
-// Using multiple interface returns is quite sketchy but it works for now
-// need to figure how to better construct typesafe query based on inputs.
-// Implementing guards is probably the wy to go.
-
-const executeQuery = async (
+const executeQuery = async <ResponseType>(
   query: string,
   params: QueryParams,
   fields: ResponseFields,
-) => {
-  const response: responseDetails = {};
+): Promise<{
+  rows: Array<ResponseType>;
+  error?: Error;
+}> => {
+  const response: {
+    rows: Array<ResponseType>;
+    error?: Error;
+  } = { rows: [] };
   try {
     await client.connect();
-    const result = await client.queryObject<List | Item | Count>(
+    const result = await client.queryObject<ResponseType>(
       {
         text: query,
         args: params,
@@ -86,4 +81,4 @@ const executeQuery = async (
 };
 
 export { executeQuery };
-export type { Count, Item, List, ResponseFields };
+export type { Count, Item, List };
