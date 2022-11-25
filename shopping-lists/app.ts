@@ -49,20 +49,17 @@ const handleListGet = async (id: number) => {
   const res = await listService.getById(id);
   const items = await itemService.getByListId(id);
 
-  console.log(items);
-  console.log(
-    items.sort((a, b) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
+  items.sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
 
-      if (nameA < nameB) return -1;
-      if (nameA > nameB) return 1;
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
 
-      return 0;
-    }).sort((a, b) => {
-      return Number(a.collected) - Number(b.collected);
-    }),
-  );
+    return 0;
+  }).sort((a, b) => {
+    return Number(a.collected) - Number(b.collected);
+  });
 
   if (res && items) {
     const data = {
