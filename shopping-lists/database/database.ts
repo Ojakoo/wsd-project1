@@ -1,5 +1,7 @@
-import { Client } from "https://deno.land/x/postgres@v0.16.1/mod.ts";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
+import { Pool } from "https://deno.land/x/postgres@v0.17.0/mod.ts";
+
+const CONCURRENT_CONNECTIONS = 2;
 
 interface serverSchema {
   user: string | undefined;
@@ -39,7 +41,7 @@ const db: serverSchema = {
   database: Deno.env.get("PGDATABASE"),
 };
 
-const client = new Client(db);
+const connectionPool = new Pool(db, CONCURRENT_CONNECTIONS);
 
 const executeQuery = async <ResponseType>(
   query: string,
@@ -53,8 +55,10 @@ const executeQuery = async <ResponseType>(
     rows: Array<ResponseType>;
     error?: Error;
   } = { rows: [] };
+  let client;
+
   try {
-    await client.connect();
+    client = await connectionPool.connect();
     const result = await client.queryObject<ResponseType>(
       {
         text: query,
@@ -70,7 +74,7 @@ const executeQuery = async <ResponseType>(
   } finally {
     if (client) {
       try {
-        await client.end();
+        await client.release();
       } catch (e) {
         console.log(e);
       }
