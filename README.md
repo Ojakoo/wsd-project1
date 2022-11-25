@@ -23,7 +23,7 @@ docker-compose start
 ## Run
 
 ```
-cd shoppping-lists/ 
+cd shopping-lists/ 
 deno run --allow-net --allow-env --allow-read app.ts
 ```
 

@@ -49,7 +49,7 @@ const handleListGet = async (id: number) => {
   const res = await listService.getById(id);
   const items = await itemService.getByListId(id);
 
-  if (res) {
+  if (res && items) {
     const data = {
       list: res[0],
       items: items,
