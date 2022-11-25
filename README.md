@@ -24,7 +24,7 @@ docker-compose start
 
 ```
 cd shopping-lists/ 
-deno run --allow-net --allow-env --allow-read app.ts
+deno run --allow-net --allow-env --allow-read --unsafely-ignore-certificate-errors app.ts
 ```
 
 ## Deploy

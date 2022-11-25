@@ -26,7 +26,7 @@ interface Count {
   count: number;
 }
 
-//  this is still bit sketch
+// this is still bit sketch
 type QueryParams = Record<string, unknown>;
 
 type ResponseFields = Array<string>;
