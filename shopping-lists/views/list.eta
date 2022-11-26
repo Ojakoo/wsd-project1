@@ -1,21 +1,20 @@
 <% layout("./layout.eta") %>
 
 <h1><%= it.list.name %></h1>
-<a href="/lists">Lists</a>
-<body>
-  <form method="POST">
+<div>
+  <form class="row margin" method="POST">
     <input type="text" name="name"/>
     <input type="submit" value="Add new item"/>
   </form>
-</body>
+</div>
 <ul>
   <% it.items.forEach((item) => { %>
-    <li>
+    <li class="row">
       <% if (item.collected) { %>
-        <p><del><%= item.name %></del></p>
+        <p class="padding align-middle"><del><%= item.name %></del></p>
       <% } else { %>
-        <p><%= item.name %></p>
-        <form method="POST" action="/lists/<%= it.list.id %>/items/<%= item.id %>/collect">
+        <p class="padding align-middle"><%= item.name %></p>
+        <form class="padding align-middle" method="POST" action="/lists/<%= it.list.id %>/items/<%= item.id %>/collect">
           <input type="submit" value="Mark collected!"/>
         </form>
       <% } %>

@@ -7,8 +7,13 @@
     />
     <title>Shared shopping lists</title>
   </head>
-  <body>
-    <a href="/">Main page</a>
-    <%~ it.body %>
+  <body class="paper border container margin-bottom-large margin-top-large">
+    <nav class="">
+      <h4 class="padding-left-large"><a href="/">Main page</a></h4>
+      <h4 class="padding-left-large"><a href="/lists">Lists</a></h4>
+    </nav>
+    <div>
+      <%~ it.body %>
+    </div>
   </body>
 </html>

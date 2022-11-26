@@ -1,18 +1,18 @@
 <% layout("./layout.eta") %>
 
 <h1>Lists<h/1>
-<body>
-  <form method="POST">
+<div>
+  <form class="row margin" method="POST">
     <input type="text" name="name"/>
     <input type="submit" value="Add new list"/>
   </form>
-</body>
+</div>
 <ul>
   <% it.lists.forEach((list) => { %>
-    <li>
-      <a href="/lists/<%= list.id %>"><%= list.name %><a>
-      <form method="POST" action="lists/<%= list.id %>/deactivate">
-        <input type="submit" value="Deactivate list!"/>
+    <li class="row">
+      <a class="padding" href="/lists/<%= list.id %>"><%= list.name %></a>
+      <form class="padding align-middle" method="POST" action="lists/<%= list.id %>/deactivate">
+        <input class="" type="submit" value="Deactivate list!"/>
       </form>
     </li>
   <% }); %>

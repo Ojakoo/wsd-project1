@@ -1,14 +1,13 @@
 <% layout("./layout.eta") %>
 
 <h1>Shared shopping lists<h/1>
-<body>
-  <nav>
-    <p><a href="/lists">Lists</a></p>
-    <% if (it.list_count === 0) { %>
-      <p>No shopping lists yet.</p>
-    <% } else { %>
-      <p>Shopping lists: <%= it.list_count %></p>
-      <p>Shopping list items: <%= it.item_count %></p>
-    <% } %>
-  </nav>
-</body>
+<div>
+  <div class="sm-6 md-8 lg-10 col">
+  <% if (it.list_count === 0) { %>
+    <p>No shopping lists yet.</p>
+  <% } else { %>
+    Shopping lists: <%= it.list_count %><br/>
+    Shopping list items: <%= it.item_count %>
+  <% } %>
+  </div>
+</div>
