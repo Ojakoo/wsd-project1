@@ -59,6 +59,8 @@ const executeQuery = async <ResponseType>(
 
   try {
     client = await connectionPool.connect();
+
+    console.log(client);
     const result = await client.queryObject<ResponseType>(
       {
         text: query,

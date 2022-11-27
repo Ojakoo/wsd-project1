@@ -4,23 +4,11 @@ import * as itemService from "./services/itemService.ts";
 import * as listService from "./services/listService.ts";
 import * as listsController from "./controllers/listsController.ts";
 import * as listController from "./controllers/listController.ts";
+import { responseDetails } from "./utils/requestUtils.ts";
 
 configure({
   views: `${Deno.cwd()}/views`,
 });
-
-const responseDetails = {
-  headers: { "Content-Type": "text/html;charset=UTF-8" },
-};
-
-const redirectTo = (path: string, code: number) => {
-  return new Response("Redirect", {
-    status: code,
-    headers: { "Location": path },
-  });
-};
-
-// router
 
 const handleRequest = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
