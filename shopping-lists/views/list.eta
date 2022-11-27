@@ -4,20 +4,22 @@
 <div>
   <form class="row margin" method="POST">
     <input type="text" name="name"/>
-    <input type="submit" value="Add new item"/>
+    <input class="paper-btn" type="submit" value="Add new item"/>
   </form>
 </div>
-<ul>
-  <% it.items.forEach((item) => { %>
-    <li class="row">
-      <% if (item.collected) { %>
-        <p class="padding align-middle"><del><%= item.name %></del></p>
-      <% } else { %>
-        <p class="padding align-middle"><%= item.name %></p>
-        <form class="padding align-middle" method="POST" action="/lists/<%= it.list.id %>/items/<%= item.id %>/collect">
-          <input type="submit" value="Mark collected!"/>
-        </form>
-      <% } %>
-    </li>
-  <% }); %>
-</ul>
+<h3>
+  <ul>
+    <% it.items.forEach((item) => { %>
+      <li class="row">
+        <% if (item.collected) { %>
+          <del><%= item.name %></del>
+        <% } else { %>
+          <%= item.name %>
+          <form class="row margin-left" method="POST" action="/lists/<%= it.list.id %>/items/<%= item.id %>/collect">
+            <input class="paper-btn" type="submit" value="Mark collected!"/>
+          </form>
+        <% } %>
+      </li>
+    <% }); %>
+  </ul>
+</h3>

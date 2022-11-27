@@ -12,8 +12,6 @@
       <h4 class="padding-left-large"><a href="/">Main page</a></h4>
       <h4 class="padding-left-large"><a href="/lists">Lists</a></h4>
     </nav>
-    <div>
-      <%~ it.body %>
-    </div>
+    <%~ it.body %>
   </body>
 </html>
